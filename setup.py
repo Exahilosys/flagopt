@@ -6,7 +6,7 @@ with open('README.md') as file:
 
 name = 'flagopt'
 
-version = '0.0.0'
+version = '0.0.1'
 
 author = 'Exahilosys'
 

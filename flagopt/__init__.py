@@ -94,41 +94,45 @@ def trace(values, ignore = ignore, clause = clause, variable = variable):
 
     level = 0
 
+    upper = True
+
     for value in values:
 
-        if value in ignore:
+        if upper:
 
-            continue
+            if value in ignore:
 
-        if value == clause[0]:
+                continue
 
-            try:
+            if value == clause[0]:
+
+                try:
+
+                    if not level:
+
+                        key = buffer
+
+                        buffer = ''
+
+                        continue
+
+                finally:
+
+                    level += 1
+
+            if value == clause[1]:
+
+                level -= 1
 
                 if not level:
 
-                    key = buffer
+                    value = trace(buffer, ignore, clause, variable)
 
                     buffer = ''
 
+                    flags[key] = value
+
                     continue
-
-            finally:
-
-                level += 1
-
-        if value == clause[1]:
-
-            level -= 1
-
-            if not level:
-
-                value = trace(buffer, ignore, clause, variable)
-
-                buffer = ''
-
-                flags[key] = value
-
-                continue
 
         if not level:
 
@@ -137,6 +141,8 @@ def trace(values, ignore = ignore, clause = clause, variable = variable):
                 key = buffer
 
                 buffer = ''
+
+                upper = False
 
                 continue
 
@@ -147,6 +153,8 @@ def trace(values, ignore = ignore, clause = clause, variable = variable):
                 buffer = ''
 
                 flags[key] = value
+
+                upper = True
 
                 continue
 
