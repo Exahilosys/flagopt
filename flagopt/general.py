@@ -10,10 +10,6 @@ escape = '\\'
 
 def strip(value, escape = escape, apply = str.strip, ghost = 1):
 
-    """
-    Strip value and clean escapes from ends.
-    """
-
     value = apply(value)
 
     revert = len(escape)
@@ -33,10 +29,6 @@ def strip(value, escape = escape, apply = str.strip, ghost = 1):
 
 def clean(values, strip = strip, empty = True):
 
-    """
-    Strip each value and yield if not empty.
-    """
-
     for value in values:
 
         value = strip(value)
@@ -49,10 +41,6 @@ def clean(values, strip = strip, empty = True):
 
 
 def parse(values, *keys, escape = escape):
-
-    """
-    Differenciate values according to keywords.
-    """
 
     kills = 0
 
@@ -87,10 +75,6 @@ def parse(values, *keys, escape = escape):
 
 def group(values, *keys, parse = parse):
 
-    """
-    Group key-value pairs by the key.
-    """
-
     (initial, *extras) = parse(values, *keys)
 
     (junk, initial) = initial
@@ -107,10 +91,6 @@ def group(values, *keys, parse = parse):
 
 
 def split(values, key, limit, group = group):
-
-    """
-    Separate flags by the key.
-    """
 
     limit = (key, limit)
 

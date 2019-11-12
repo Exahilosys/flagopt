@@ -8,10 +8,21 @@ from . import helpers
 __all__ = (*general.__all__, 'snip', 'draw', 'trace')
 
 
-def snip(flags, value, parse = parse, strip = strip):
+def snip(flags, value):
 
     """
-    Get recursive multidict representation of arguments based on the flags.
+    Get recursive representation of arguments based on the flags.
+
+    :param dict flags:
+        Figure to use against value.
+    :param str value:
+        Content to derive results.
+
+    .. code-block::
+
+        >>> flags = {'-s': 'size', '-t': {'-b': 'base', '-t': 'toppings'}}
+        >>> value = 'big -t bbq \-t bacon -b tomato \-t mushroom'
+        >>> args = snip(flags, value) # multidict
     """
 
     keys = flags.keys()
@@ -54,6 +65,20 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
 
     """
     Draw description on how this flags expects.
+
+    :param dict flags:
+        Figure to derive result.
+    :param str empty:
+        Used to join chunks.
+    :param str clause:
+        Open and close of a sub-section.
+    :param str variable:
+        Open and close of a variable name.
+
+    .. code-block::
+
+        >>> flags = {'-s': 'size', '-t': {'-b': 'base', '-t': 'toppings'}}
+        >>> usage = draw(flags) # '-s [size] -t (-b [base] -t [toppings])'
     """
 
     store = []
@@ -79,13 +104,26 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
     return empty.join(store)
 
 
-ignore = '{}' + empty
+ignore = '{}|' + empty
 
 
-def trace(values, ignore = ignore, clause = clause, variable = variable):
+def trace(value, ignore = ignore, clause = clause, variable = variable):
 
     """
-    Get flags from the string; used from drawing and snipping.
+    Get flags from the string; used for drawing and snipping.
+
+    :param str value:
+        The value to derive figure.
+    :param str ignore:
+        Skip any character found here.
+
+    The rest are the same as in :func:`draw`.
+
+    .. code-block::
+
+        >>> usage = '-s [size] -t (-b {[base]} -t [toppings])'
+        >>> args = trace(usage) # {'-s': 'size', '-t': {'-b': 'base', '-t': \
+'toppings'}}
     """
 
     flags = {}
@@ -96,7 +134,7 @@ def trace(values, ignore = ignore, clause = clause, variable = variable):
 
     upper = True
 
-    for value in values:
+    for value in value:
 
         if upper:
 
