@@ -8,7 +8,7 @@ from . import helpers
 __all__ = (*general.__all__, 'snip', 'draw', 'trace')
 
 
-def snip(flags, value):
+def snip(flags, value, apply = None):
 
     """
     Get recursive representation of arguments based on the flags.
@@ -17,6 +17,8 @@ def snip(flags, value):
         Figure to use against value.
     :param str value:
         Content to derive results.
+    :param func apply:
+        Called on values, useful for sub-parsing.
 
     .. code-block::
 
@@ -46,6 +48,10 @@ def snip(flags, value):
         if isinstance(item, dict):
 
             value = snip(item, value, parse, strip)
+
+        elif apply:
+
+            value = apply(value)
 
         store.add(key, value)
 
