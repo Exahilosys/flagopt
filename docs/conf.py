@@ -93,3 +93,5 @@ def setup(app):
                 line = line.replace(':class:`', ':class:`~')
 
         return old_add_line(self, line, source, *lineno)
+
+    sphinx.ext.autodoc.ClassDocumenter.add_line = new_add_line

@@ -51,7 +51,7 @@ def snip(flags, value, apply = None):
 
         elif apply:
 
-            value = apply(value)
+            value = apply(item, value)
 
         store.add(key, value)
 
