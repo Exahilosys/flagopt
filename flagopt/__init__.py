@@ -2,8 +2,6 @@ import multidict
 
 from .general import *
 
-from . import helpers
-
 
 __all__ = (*general.__all__, 'snip', 'draw', 'trace')
 
@@ -47,7 +45,7 @@ def snip(flags, value, apply = None):
 
         if isinstance(item, dict):
 
-            value = snip(item, value, parse, strip)
+            value = snip(item, value, apply)
 
         elif apply:
 
@@ -87,27 +85,11 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
         >>> usage = draw(flags) # '-s [size] -t (-b [base] -t [toppings])'
     """
 
-    store = []
+    glue = empty.join
 
-    for (key, value) in flags.items():
+    generate = abstract.draw(clause, variable, flags, glue)
 
-        store.append(key)
-
-        if isinstance(value, dict):
-
-            ends = clause
-
-            value = draw(value)
-
-        else:
-
-            ends = variable
-
-        value = helpers.wrap(ends, value)
-
-        store.append(value)
-
-    return empty.join(store)
+    return glue(generate)
 
 
 ignore = '{}|' + empty

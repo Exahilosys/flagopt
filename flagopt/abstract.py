@@ -73,9 +73,9 @@ def snip(combine, clean, explicit, store, value):
         yield (key, value)
 
 
-def draw(clause, variable, figure):
+def draw(clause, variable, flags, join):
 
-    for (key, value) in figure.items():
+    for (key, value) in flags.items():
 
         yield key
 
@@ -83,12 +83,12 @@ def draw(clause, variable, figure):
 
             ends = clause
 
-            value = draw(value)
+            value = draw(clause, variable, value, join)
+
+            value = join(value)
 
         else:
 
             ends = variable
 
-        value = helpers.wrap(ends, value)
-
-        yield value
+        yield helpers.wrap(ends, value)
