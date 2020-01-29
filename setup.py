@@ -22,10 +22,5 @@ setuptools.setup(
     long_description = readme,
     install_requires = [
         'multidict'
-    ],
-    extras_require = {
-        'docs': [
-            'sphinx'
-        ]
-    }
+    ]
 )

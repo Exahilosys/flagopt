@@ -1,12 +1,12 @@
 Installing
-==========
+----------
 
 .. code-block:: bash
 
-  pip3 install throttle
+  pip3 install flagopt
 
 Battleship
-==========
+----------
 
 .. code-block:: python
 
@@ -23,7 +23,7 @@ Battleship
   print('hit at', args['-x'], args['-y'])
 
 Actions
-=======
+-------
 
 .. code-block:: python
 
@@ -88,3 +88,9 @@ Actions
   moves = args.getall('-move')
 
   print(moves)
+
+
+Links
+-----
+
+- `Documentation <https://flagopt.readthedocs.io>`_

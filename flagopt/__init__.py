@@ -18,7 +18,7 @@ def snip(flags, value, apply = None):
     :param func apply:
         Called on values, useful for sub-parsing.
 
-    .. code-block::
+    .. code-block:: py
 
         >>> flags = {'-s': 'size', '-t': {'-b': 'base', '-t': 'toppings'}}
         >>> value = 'big -t bbq \-t bacon -b tomato \-t mushroom'
@@ -79,7 +79,7 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
     :param str variable:
         Open and close of a variable name.
 
-    .. code-block::
+    .. code-block:: py
 
         >>> flags = {'-s': 'size', '-t': {'-b': 'base', '-t': 'toppings'}}
         >>> usage = draw(flags) # '-s [size] -t (-b [base] -t [toppings])'
@@ -107,7 +107,7 @@ def trace(value, ignore = ignore, clause = clause, variable = variable):
 
     The rest are the same as in :func:`draw`.
 
-    .. code-block::
+    .. code-block:: py
 
         >>> usage = '-s [size] -t (-b {[base]} -t [toppings])'
         >>> args = trace(usage) # {'-s': 'size', '-t': {'-b': 'base', '-t': \
