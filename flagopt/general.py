@@ -90,11 +90,9 @@ def group(values, *keys, parse = parse):
     return (initial, *values)
 
 
-def split(values, key, limit, group = group):
+def split(values, key, group = group):
 
-    limit = (key, limit)
-
-    (value, values) = group(values, limit)
+    (value, values) = group(values, key)
 
     values.insert(0, value)
 
