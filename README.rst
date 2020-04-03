@@ -59,7 +59,7 @@ Actions
     # -target will be ignored during the first parse scan
     # and the backslash will be removed so that -target can
     # be considered during the next scan for -scavenge;
-    # multiple backslashed can be used to achieve other
+    # multiple backslashes can be used to achieve other
     # amounts of iterations for this effect
     '-scavenge \-target wood '
     # arguments can be passed multiple times (-time);

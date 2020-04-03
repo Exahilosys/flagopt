@@ -68,7 +68,7 @@ variable = '[]'
 def draw(flags, empty = empty, clause = clause, variable = variable):
 
     """
-    Draw description on how this flags expects.
+    Draw description on how these flags expect arguments.
 
     :param dict flags:
         Figure to derive result.
