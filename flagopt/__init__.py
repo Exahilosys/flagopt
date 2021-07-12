@@ -30,27 +30,16 @@ def snip(flags, value, apply = None):
     store = multidict.MultiDict()
 
     for (key, value) in parse(value, *keys):
-
         value = strip(value)
-
         if key is None:
-
             if not value:
-
                 continue
-
             key = next(iter(keys))
-
         item = flags[key]
-
         if isinstance(item, dict):
-
             value = snip(item, value, apply)
-
         elif apply:
-
             value = apply(item, value)
-
         store.add(key, value)
 
     return store
@@ -65,7 +54,11 @@ clause = '()'
 variable = '[]'
 
 
-def draw(flags, empty = empty, clause = clause, variable = variable):
+def draw(flags,
+         empty = empty,
+         clause = clause,
+         variable = variable,
+         apply = None):
 
     """
     Draw description on how these flags expect arguments.
@@ -77,7 +70,9 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
     :param str clause:
         Open and close of a sub-section.
     :param str variable:
-        Open and close of a variable name.
+        Open and close of variable names.
+    :param func apply:
+        Will be used on all variable names.
 
     .. code-block:: py
 
@@ -87,7 +82,7 @@ def draw(flags, empty = empty, clause = clause, variable = variable):
 
     glue = empty.join
 
-    generate = abstract.draw(clause, variable, flags, glue)
+    generate = abstract.draw(clause, variable, flags, glue, apply = apply)
 
     return glue(generate)
 
@@ -123,67 +118,36 @@ def trace(value, ignore = ignore, clause = clause, variable = variable):
     upper = True
 
     for value in value:
-
         if upper:
-
             if value in ignore:
-
                 continue
-
             if value == clause[0]:
-
                 try:
-
                     if not level:
-
                         key = buffer
-
                         buffer = ''
-
                         continue
-
                 finally:
-
                     level += 1
-
             if value == clause[1]:
-
                 level -= 1
-
                 if not level:
-
                     value = trace(buffer, ignore, clause, variable)
-
                     buffer = ''
-
                     flags[key] = value
-
                     continue
-
         if not level:
-
             if value == variable[0]:
-
                 key = buffer
-
                 buffer = ''
-
                 upper = False
-
                 continue
-
             if value == variable[1]:
-
                 value = buffer
-
                 buffer = ''
-
                 flags[key] = value
-
                 upper = True
-
                 continue
-
         buffer += value
 
     return flags

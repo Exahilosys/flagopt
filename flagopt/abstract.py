@@ -20,29 +20,19 @@ def parse(escape, values, keys):
     matches = sorted(matches, key = drag)
 
     for match in matches:
-
         span = match.span()
-
         (start, end) = span
-
         defeat = lambda other: (
             not match is other
             and start <= other.start() < end
             and other.end() > end
         )
-
         if any(map(defeat, matches)):
-
             continue
-
         key = match.re.pattern
-
         back = start - len(escape)
-
         against = values[back:start]
-
         valid = not against == escape
-
         yield (valid, key, span)
 
 
@@ -51,44 +41,28 @@ def snip(combine, clean, explicit, store, value):
     pairs = combine(value)
 
     for (index, pair) in enumerate(pairs):
-
         (key, value) = pair
-
         if not key:
-
             if not value or explicit:
-
                 continue
-
             key = next(iter(store))
-
         value = clean(value)
-
         item = store[key]
-
         if not isinstance(item, str):
-
             value = snip(combine, clean, explicit, item, value)
-
         yield (key, value)
 
 
-def draw(clause, variable, flags, join):
+def draw(clause, variable, flags, join, apply = None):
 
     for (key, value) in flags.items():
-
         yield key
-
         if isinstance(value, dict):
-
             ends = clause
-
-            value = draw(clause, variable, value, join)
-
+            value = draw(clause, variable, value, join, apply)
             value = join(value)
-
         else:
-
             ends = variable
-
+            if apply:
+                value = apply(value)
         yield helpers.wrap(ends, value)

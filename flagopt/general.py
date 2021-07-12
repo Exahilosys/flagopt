@@ -15,13 +15,9 @@ def strip(value, escape = escape, apply = str.strip, ghost = 1):
     revert = len(escape)
 
     for index in range(ghost):
-
         if value.startswith(escape):
-
             value = value[revert:]
-
         if value.endswith(escape):
-
             value = value[:-revert]
 
     return value
